@@ -1,0 +1,48 @@
+{% include "lostandfoundapp/base.html" %} {% block block %}
+<!-- {{object.title}} {{object.description}} {{object.image}} {{object.contact_person_name}}
+    {{object.contact_person_mobile_or_email}} {{object.author}} {{object.date_found_or_lost}}-->
+<div class="row ml-2">
+    <div class="col-lg-7">
+        <div class="row">
+            <div class="col-lg-3 lead">
+                Posted By, {{object.author}}
+            </div>
+            <div class="col-lg-5 text-left">
+                <strong>Title : {{object.title}} </strong>
+            </div>
+            <div class="col-lg-4">
+                <mark>Item {{object.lost_or_found | upper}} on {{object.date_found_or_lost}}</mark>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <strong>Description </strong>
+                </br>
+                {{object.description}}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                Contact Person Name :
+                <strong> {{object.contact_person_name}} </strong>
+                </br>
+                Contact Person Email/Mobile :
+                <strong> {{object.contact_person_mobile_or_email}} </strong>
+                </br>
+                Status :
+                <strong> {{object.status}} </strong>
+                </br>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <img src="{{object.image.url}}" alt="image not found" width="320" height="240">
+    </div>
+
+</div>
+
+
+{% endblock block %}
