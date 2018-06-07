@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title> {% block title %} Home {% endblock title %} </title>
     
 </head>
 <body>
@@ -21,9 +20,16 @@
                     <li class="nav-item active">
                       <a class="nav-link" href="{% url 'lostandfoundapp:home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                   
+                    {% if user.is_authenticated %}
+                      <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'lostandfoundapp:myposts' %}">My Posts <span class="sr-only">(current)</span></a>
+                      </li>
+                    {% endif %}
+                    <li class="nav-item active">
+                      <a class="nav-link" href="{% url 'lostandfoundapp:add' %}">Add Post <span class="sr-only">(current)</span></a>
+                    </li>
                   </ul>
-                  <form class="form-inline my-2 my-lg-0" method = "GET" action = "{% url 'lostandfoundapp:home' %}"> {% csrf_token %}
+                  <form class="form-inline my-2 my-lg-0 mr-2" method = "GET" action = "{% url 'lostandfoundapp:home' %}"> {% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
                     <div class="form-check-inline">
                         <label class="form-check-label" for="lost">
@@ -37,6 +43,22 @@
                       </div>
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                   </form>
+
+                  {% if user.is_authenticated %}
+                    <p class="">Hello, {{ user.username }}</p>
+                    <p>
+                      <button type="button" class="btn btn-outline-primary"><a href ="{% url 'logout' %}">Logout</a></button>
+                      
+                    </p>
+	                {% else %}
+                    <div class="col-xs-4 col-sm-2">
+                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-lg btn-block omb_btn-google">
+                          <i class="fa fa-google-plus visible-xs"></i>
+                          <span class="hidden-xs">Google+</span>
+                        </a>
+                      </div>
+                  {% endif %}
+  
                 </div>
               </nav>
 

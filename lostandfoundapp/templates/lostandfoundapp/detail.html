@@ -39,7 +39,12 @@
     </div>
 
     <div class="col-lg-5">
-        <img src="{{object.image.url}}" alt="image not found" width="320" height="240">
+        
+        {% if object.image.url != ""%}
+            <img src="{{object.image.url}}" alt="image not found" width="320" height="240">
+            
+        {% endif %}
+            
     </div>
 
 </div>

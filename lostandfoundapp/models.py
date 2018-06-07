@@ -25,7 +25,8 @@ class LostAndFound(models.Model):
     date_published                      = models.DateField(verbose_name = 'published date', default= timezone.now)
     status                              = models.CharField(max_length = 10, choices = status_choice_field, default = 'pending') 
     date_solved                         = models.DateField(verbose_name = 'solved date', blank=True, null=True)
-    author                              = models.CharField(default = 'Parvez', max_length=50)
+    author                              = models.CharField(max_length=50, blank=True, null=True)
+    author_email                        = models.CharField( max_length=50, blank=True, null=True)
 
     class Meta:
         ordering = ['-id']
