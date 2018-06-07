@@ -1,0 +1,55 @@
+{% include 'lostandfoundapp/base.html' %}
+
+<title> {% block title %} Home {% endblock title %} </title>
+{% block block %}
+    
+    {% if object_list %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th> <th>Title</th> <th>Lost Or Found</th> <th>Date of Lost Or Found</th> <th>Status</th>
+                    <th>Update</th> <th>Delete</th>
+                </tr>
+            </thead>
+            {% for object in object_list %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td> <a href="{% url 'lostandfoundapp:detail' pk=object.id slug=object.slug %}"> {{object.title | upper}} </a> </td>
+                    <td> {{object.lost_or_found | upper}} </td>
+                    <td> {{object.date_found_or_lost | upper}} </td>
+                    <td> {{object.status | upper}} </td>
+                    <td> <a href="{% url 'lostandfoundapp:update' pk=object.id slug=object.slug %}">Update</a> </td>
+                    <td> <a href="{% url 'lostandfoundapp:delete' pk=object.id slug=object.slug %}">Delete</a> </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h2>No Result Found</h2>
+    {% endif %}
+
+    {% if is_paginated %}
+    <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+            {% endif %}
+
+            {% for i in paginator.page_range %}
+                {% if page_obj.number == i %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></span></a> </li>
+                {% else %}
+                    <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li ><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            {% else %}
+            <li class="page-item disabled""> <a class="page-link" href="#" tabindex="-1">Next</a></li>
+        {% endif %}
+    </ul>
+{% endif %}
+        
+{% endblock block %}
+    

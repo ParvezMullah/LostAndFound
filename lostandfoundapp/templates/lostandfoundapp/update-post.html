@@ -1,0 +1,12 @@
+{% include "lostandfoundapp/base.html" %}
+<title> {% block title %} Update {% endblock title %} </title>
+
+
+{% block block %}
+    <form action="" method="post"> {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Update">
+    </form>
+    
+{% endblock block %}
+    

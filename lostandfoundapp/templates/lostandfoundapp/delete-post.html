@@ -1,0 +1,13 @@
+{% include "lostandfoundapp/base.html" %}
+<title> {% block title %} Update {% endblock title %} </title>
+
+
+{% block block %}
+    <form action="" method="post"> {% csrf_token %}
+        {{form.as_p}}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <input type = 'submit' value = 'confirm?' >
+        <a href = "{{object.get_absolute_url}}">Cancel </a>
+    </form>
+{% endblock block %}
+    
