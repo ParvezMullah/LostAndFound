@@ -1,13 +1,19 @@
 {% include "lostandfoundapp/base.html" %}
-<title> {% block title %} Update {% endblock title %} </title>
+{% load crispy_forms_tags %}
 
+<title> {% block title %} Delete {% endblock title %} </title>
 
 {% block block %}
-    <form action="" method="post"> {% csrf_token %}
-        {{form.as_p}}
-        <p>Are you sure you want to delete "{{ object }}"?</p>
-        <input type = 'submit' value = 'confirm?' >
-        <a href = "{{object.get_absolute_url}}">Cancel </a>
-    </form>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col">
+                <form action="" method="post"> {% csrf_token %}
+                        {{form|crispy}}
+                        <p class="h5">Are you sure you want to delete "{{ object }}"?</p>
+                        <input class="btn btn-danger" type = 'submit' value = 'confirm?' >
+                        <a class="btn btn-primary" href = "{% url 'lostandfoundapp:myposts' %}">Cancel </a>
+                    </form>
+        </div>
+    </div>
 {% endblock block %}
     

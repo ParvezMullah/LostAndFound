@@ -5,6 +5,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator 
 from django.urls import reverse
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
+
 from .models import LostAndFound
 
 # Create your views here.
@@ -32,14 +34,14 @@ class LostAndFoundDetailView(DetailView):
     template_name = "lostandfoundapp/detail.html"
 
 
-class LostAndFoundCreateView(CreateView):
+class LostAndFoundCreateView(SuccessMessageMixin, CreateView):
     model = LostAndFound
     fields = [f.name for f in LostAndFound._meta.get_fields()]
     fields.remove('author')
     fields.remove('author_email')
     template_name = "lostandfoundapp/add-post.html"
-    SuccessMessageMixin = '%(title)s added successfully.'
-    success_url = '/lostandfoundapp/'
+    success_message = '%(title)s added successfully.'
+    success_url = '/lostandfoundapp/myposts'
 
     def form_valid(self, form):
         form.instance.author = self.request.user.username
@@ -47,21 +49,29 @@ class LostAndFoundCreateView(CreateView):
         return super(LostAndFoundCreateView, self).form_valid(form)
 
 
-class LostAndFoundUpdateView(UpdateView):
+class LostAndFoundUpdateView(SuccessMessageMixin, UpdateView):
     model = LostAndFound
     fields = [f.name for f in LostAndFound._meta.get_fields()]
     fields.remove('author')
     fields.remove('author_email')
     template_name = "lostandfoundapp/update-post.html"
-    SuccessMessageMixin = '%(title)s updated successfully.'
-    success_url = '/lostandfoundapp/'
+    success_message = '%(title)s updated successfully.'
+    success_url = '/lostandfoundapp/myposts'
 
+    def form_valid(self, form):
+        form_valid = super(LostAndFoundUpdateView, self).form_valid(form)
+        return form_valid
+    
 
-class LostAndFoundDeleteView(DeleteView):
+class LostAndFoundDeleteView(SuccessMessageMixin, DeleteView):
     model = LostAndFound
     template_name = "lostandfoundapp/delete-post.html"
-    SuccessMessageMixin = '%(title)s deleted successfully.'
-    success_url = '/lostandfoundapp/'
+    success_message = 'deleted successfully.'
+    success_url = '/lostandfoundapp/myposts'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(LostAndFoundDeleteView, self).delete(request, *args, **kwargs)
 
 
 """
@@ -77,6 +87,7 @@ class UserLostAndFoundListView(ListView):
         queryset = super(UserLostAndFoundListView, self).get_queryset()
         queryset = queryset.filter(author_email = self.request.user.email)
         return queryset
+
 
 
 

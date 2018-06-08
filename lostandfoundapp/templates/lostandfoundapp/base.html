@@ -9,7 +9,7 @@
 </head>
 <body>
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white mb-2 p-3">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -45,11 +45,11 @@
                   </form>
 
                   {% if user.is_authenticated %}
-                    <p class="">Hello, {{ user.username }}</p>
-                    <p>
+                    
+                    <div class="">
+                      Hello, {{ user.username }}
                       <button type="button" class="btn btn-outline-primary"><a href ="{% url 'logout' %}">Logout</a></button>
-                      
-                    </p>
+                    </div>
 	                {% else %}
                     <div class="col-xs-4 col-sm-2">
                         <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-lg btn-block omb_btn-google">

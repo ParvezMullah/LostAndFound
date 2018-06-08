@@ -41,3 +41,6 @@ class LostAndFound(models.Model):
     def get_queryset(self):
         queryset = super(LostAndFound, self).get_queryset().order_by('-id')
         return queryset
+
+    
+    
