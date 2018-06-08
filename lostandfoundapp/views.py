@@ -1,12 +1,14 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator 
-from django.urls import reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from django.utils.decorators import method_decorator
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView 
 from .models import LostAndFound
 
 # Create your views here.
@@ -49,7 +51,7 @@ class LostAndFoundCreateView(SuccessMessageMixin, CreateView):
         return super(LostAndFoundCreateView, self).form_valid(form)
 
 
-class LostAndFoundUpdateView(SuccessMessageMixin, UpdateView):
+class LostAndFoundUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = LostAndFound
     fields = [f.name for f in LostAndFound._meta.get_fields()]
     fields.remove('author')
@@ -63,7 +65,7 @@ class LostAndFoundUpdateView(SuccessMessageMixin, UpdateView):
         return form_valid
     
 
-class LostAndFoundDeleteView(SuccessMessageMixin, DeleteView):
+class LostAndFoundDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = LostAndFound
     template_name = "lostandfoundapp/delete-post.html"
     success_message = 'deleted successfully.'
@@ -77,16 +79,17 @@ class LostAndFoundDeleteView(SuccessMessageMixin, DeleteView):
 """
 To Display user's own Posts
 """
-
-class UserLostAndFoundListView(ListView):
+class UserLostAndFoundListView(LoginRequiredMixin, ListView):
     model = LostAndFound
     template_name = "lostandfoundapp/my-posts.html"
     paginate_by = 10
-
+    
     def get_queryset(self):
         queryset = super(UserLostAndFoundListView, self).get_queryset()
         queryset = queryset.filter(author_email = self.request.user.email)
         return queryset
+
+    
 
 
 

@@ -13,18 +13,16 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="#">LostAndFound</a>
+                <a class="navbar-brand" href="">LostAndFound</a>
               
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item active">
                       <a class="nav-link" href="{% url 'lostandfoundapp:home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    {% if user.is_authenticated %}
                       <li class="nav-item active">
                         <a class="nav-link" href="{% url 'lostandfoundapp:myposts' %}">My Posts <span class="sr-only">(current)</span></a>
                       </li>
-                    {% endif %}
                     <li class="nav-item active">
                       <a class="nav-link" href="{% url 'lostandfoundapp:add' %}">Add Post <span class="sr-only">(current)</span></a>
                     </li>
@@ -52,7 +50,7 @@
                     </div>
 	                {% else %}
                     <div class="col-xs-4 col-sm-2">
-                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-lg btn-block omb_btn-google">
+                        <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block btn-light">
                           <i class="fa fa-google-plus visible-xs"></i>
                           <span class="hidden-xs">Google+</span>
                         </a>
