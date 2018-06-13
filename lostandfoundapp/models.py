@@ -21,7 +21,7 @@ class LostAndFound(models.Model):
     image                               = models.ImageField(null = True, blank = True)
     contact_person_name                 = models.CharField(max_length = 20)
     contact_person_mobile_or_email      = models.CharField(max_length = 30, validators= [validate_person_email_or_contact])
-    date_found_or_lost                  = models.DateField(verbose_name = 'lost or found date ')
+    date_found_or_lost                  = models.DateField(verbose_name = 'lost or found date ', default= timezone.now)
     date_published                      = models.DateField(verbose_name = 'published date', default= timezone.now)
     status                              = models.CharField(max_length = 10, choices = status_choice_field, default = 'pending') 
     date_solved                         = models.DateField(verbose_name = 'solved date', blank=True, null=True)
